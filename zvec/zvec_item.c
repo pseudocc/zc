@@ -18,9 +18,9 @@ int32_t zvec_priv_rar_unit(zvec_t* this) {
 int32_t zvec_fit(zvec_t* this) {
   if (this->lrem)
     zvec_intl_rar(this, this->lrem);
-  this->head = realloc(this->head, this->n_items * this->n_bytes);
+  this->head = realloc(this->head, zvec_size(this) * this->soe);
   this->rrem = 0;
-  return this->n_items;
+  return zvec_size(this);
 }
 
 static inline
@@ -30,7 +30,7 @@ int32_t zvec_priv_grow(zvec_t* this) {
 
   cap = zvec_cap(this);
   alloc = cap * 2 < MIN_CAPACITY ? MIN_CAPACITY : cap;
-  vp = realloc(this->head, alloc * this->n_bytes);
+  vp = realloc(this->head, alloc * this->soe);
   if (vp == NULL)
     return 0;
 
@@ -40,7 +40,7 @@ int32_t zvec_priv_grow(zvec_t* this) {
 }
 
 int32_t zvec_push(zvec_t* this, const void* val) {
-  int32_t unit;
+  int32_t unit, size;
   if (!this->rrem) {
     unit = zvec_priv_rar_unit(this);
     if (unit)
@@ -48,25 +48,28 @@ int32_t zvec_push(zvec_t* this, const void* val) {
     else if (!zvec_priv_grow(this))
       return 0;
   }
-  memcpy(zvec_at(this, this->n_items++), &val, this->n_bytes);
+  size = zvec_size(this);
+  memcpy(zvec_at(this, size++), &val, this->soe);
   this->rrem--;
-  return this->n_items;
+  return size;
 }
 
 int32_t zvec_pop(zvec_t* this, void* ref) {
-  if (!this->n_items)
+  int32_t size = zvec_size(this);
+  if (!size)
     return 0;
-  memcpy(ref, zvec_at(this, --this->items), this->n_bytes);
+  memcpy(ref, zvec_at(this, --size), this->soe);
   this->rrem++;
-  return this->n_items;
+  return size;
 }
 
 int32_t zvec_shift(zvec_t* this, void* ref) {
-  if (!this->n_items)
+  int32_t size = zvec_size(this);
+  if (!size)
     return 0;
-  memcpy(ref, zvec_begin(this), this->n_bytes);
-  this->rrem++;
-  return --this->n_items;
+  memcpy(ref, zvec_begin(this), this->soe);
+  this->lrem++;
+  return size - 1;
 }
 
 int32_t zvec_purge(zvec_t* this, const void* val) {
@@ -79,7 +82,7 @@ int32_t zvec_purge(zvec_t* this, const void* val) {
 
   while (i != e) {
     zvec_inc(this, &i);
-    while (i < e && !memcmp(i, val, this->n_bytes)) {
+    while (i < e && !memcmp(i, val, this->soe)) {
       zvec_inc(this, &i);
       n_deleted++;
     }
@@ -87,7 +90,7 @@ int32_t zvec_purge(zvec_t* this, const void* val) {
       break;
     j = i;
     zvec_inc(this, &j);
-    while (j < e && memcmp(j, val, this->n_bytes))
+    while (j < e && memcmp(j, val, this->soe))
       zvec_inc(this, &j);
     
     int32_t n_bytes, unit, sweeps, remain;
@@ -125,12 +128,11 @@ void zvec_rm(zvec_t* this, zvec_it it) {
   b = it;
   zvec_inc(this, &it);
   while (it < e) {
-    memcpy(b, it, this->n_bytes);
+    memcpy(b, it, this->soe);
     zvec_inc(this, &b);
     zvec_inc(this, &it);
   }
   
-  this->n_items--;
   this->rrem++;
 }
 
@@ -146,11 +148,11 @@ int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
   b = e;
   zvec_dec(this, &e);
   while (it < b) {
-    memcpy(b, e, this->n_bytes);
+    memcpy(b, e, this->soe);
     zvec_dec(this, &b);
     zvec_dec(this, &e);
   }
-  memcpy(b, val, this->n_bytes);
+  memcpy(b, val, this->soe);
 
-  return this->n_items;
+  return zvec_size(this);
 }

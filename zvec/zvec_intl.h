@@ -11,8 +11,8 @@ struct zvec {
   void* head;
   int32_t lrem;
   int32_t rrem;
-  int32_t n_items;
-  uint32_t n_bytes;
+  int32_t cap;
+  uint32_t soe;
 };
 
 void zvec_intl_rar(zvec_t*, int32_t);
