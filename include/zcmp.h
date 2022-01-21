@@ -13,8 +13,8 @@ extern cmpf zcmp_u16;
 extern cmpf zcmp_u32;
 extern cmpf zcmp_u64;
 
-extern cmpf zcmp_f16;
 extern cmpf zcmp_f32;
+extern cmpf zcmp_f64;
 
 extern cmpf zcmp_str;
 extern cmpf zcmp_obj;

@@ -19,8 +19,8 @@ ZCMP_IMPL_NUM(zcmp_u16, uint16_t)
 ZCMP_IMPL_NUM(zcmp_u32, uint32_t)
 ZCMP_IMPL_NUM(zcmp_u64, uint64_t)
 
-ZCMP_IMPL_NUM(zcmp_f16, float)
-ZCMP_IMPL_NUM(zcmp_f32, double)
+ZCMP_IMPL_NUM(zcmp_f32, float)
+ZCMP_IMPL_NUM(zcmp_f64, double)
 
 static int zcmp_priv_str(const void* l, const void* r) {
   char* lstr = *(char**)l;
