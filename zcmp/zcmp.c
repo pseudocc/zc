@@ -28,4 +28,5 @@ static int zcmp_priv_str(const void* l, const void* r) {
   return strcmp(lstr, rstr);
 }
 
+static cmpf zcmp_str = &zcmp_priv_str;
 static cmpf zcmp_obj = zcmp_u64;
