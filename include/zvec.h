@@ -2,6 +2,7 @@
 #define Z_VECTOR_H
 
 #include <inttypes.h>
+#include "./zcmp.h"
 
 typedef struct zvec zvec_t;
 typedef void* zvec_it;
@@ -33,7 +34,6 @@ void zvec_mov(zvec_t*, zvec_it*, int32_t);
 int32_t zvec_size(zvec_t*);
 int32_t zvec_cap(zvec_t*);
 
-typedef int (*cmpf)(const void*, const void*);
 void zvec_sort(zvec_t*, zvec_it, zvec_it, cmpf);
 
 #define zvec_get(it, ty) *(ty*)it
