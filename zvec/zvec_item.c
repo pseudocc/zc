@@ -49,18 +49,18 @@ int32_t zvec_push(zvec_t* this, const void* val) {
       return 0;
   }
   size = zvec_size(this);
-  memcpy(zvec_at(this, size++), &val, this->soe);
+  memcpy(zvec_end(this), &val, this->soe);
   this->rrem--;
-  return size;
+  return size + 1;
 }
 
 int32_t zvec_pop(zvec_t* this, void* ref) {
   int32_t size = zvec_size(this);
   if (!size)
     return 0;
-  memcpy(ref, zvec_at(this, --size), this->soe);
+  memcpy(ref, zvec_end(this), this->soe);
   this->rrem++;
-  return size;
+  return size - 1;
 }
 
 int32_t zvec_shift(zvec_t* this, void* ref) {
