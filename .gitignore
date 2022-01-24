@@ -4,3 +4,6 @@
 # objects
 *.o
 
+# dist
+libzc.a
+ztest

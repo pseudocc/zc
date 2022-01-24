@@ -2,6 +2,8 @@ CC = gcc
 LD = gcc
 CFLAGS = -I.
 DFLAGS = -g -DDEBUG
+STATIC_LIB = libzc.a
+TEST_EXE = ztest
 
 ifdef DEBUG
 CFLAGS += $(DFLAGS)
@@ -20,8 +22,19 @@ obj = $(src:.c=.o)
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
 
-all: $(obj)
-	echo "nothing"
+all: $(STATIC_LIB) $(TEST_EXE)
+	make clean_objs
 
+$(STATIC_LIB): $(zvec_obj) $(zcmp_obj)
+	ar rcs $@ $^
+
+$(TEST_EXE): $(test_obj) $(STATIC_LIB)
+	$(CC) $(CFLAGS) $^ -o $@
+
+.PHONY: clean
 clean:
+	rm -f $(obj) $(STATIC_LIB) $(TEST_EXE)
+
+.PHONY: clean_objs
+clean_objs:
 	rm -f $(obj)
