@@ -10,8 +10,9 @@ void zvec_priv_clear(zvec_t* this, int32_t cap) {
 
 zvec_t* zvec_new(int32_t cap, uint32_t soe) {
   zvec_t* inst;
-  if (cap < MIN_CAPACITY)
-    cap = MIN_CAPACITY;
+  if (cap < 0)
+    return NULL;
+  cap = cap ? cap : MIN_CAPACITY;
 
   inst = malloc(sizeof(zvec_t));
   inst->head = malloc((cap + 1) * soe);
