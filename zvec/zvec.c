@@ -44,7 +44,7 @@ void zvec_clear(zvec_t* this) {
   zvec_priv_clear(this, cap);
 }
 
-int32_t zvect_size(zvec_t* this) {
+int32_t zvec_size(zvec_t* this) {
   return this->cap - this->lrem - this->rrem;
 }
 
