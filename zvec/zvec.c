@@ -14,10 +14,10 @@ zvec_t* zvec_new(int32_t cap, uint32_t soe) {
     cap = MIN_CAPACITY;
 
   inst = malloc(sizeof(zvec_t));
-  inst->head = malloc(cap * soe);
+  inst->head = malloc((cap + 1) * soe);
 
   if (inst->head == NULL) {
-    fprintf(stderr, "Out of memory, require %d bytes", cap * soe);
+    fprintf(stderr, "Out of memory, require %d bytes", (cap + 1) * soe);
     free(inst);
     return NULL;
   }
@@ -38,7 +38,7 @@ void zvec_clear(zvec_t* this) {
   int32_t cap = this->cap;
   if (cap > MIN_CAPACITY) {
     cap = MIN_CAPACITY;
-    this->head = realloc(this->head, cap * this->soe);
+    this->head = realloc(this->head, (cap + 1) * this->soe);
   }
   zvec_priv_clear(this, cap);
 }

@@ -18,7 +18,7 @@ int32_t zvec_priv_rar_unit(zvec_t* this) {
 int32_t zvec_fit(zvec_t* this) {
   if (this->lrem)
     zvec_intl_rar(this, this->lrem);
-  this->head = realloc(this->head, zvec_size(this) * this->soe);
+  this->head = realloc(this->head, (zvec_size(this) + 1) * this->soe);
   this->rrem = 0;
   return zvec_size(this);
 }
@@ -30,7 +30,7 @@ int32_t zvec_priv_grow(zvec_t* this) {
 
   cap = zvec_cap(this);
   alloc = cap * 2 < MIN_CAPACITY ? MIN_CAPACITY : cap;
-  vp = realloc(this->head, alloc * this->soe);
+  vp = realloc(this->head, (alloc + 1) * this->soe);
   if (vp == NULL)
     return 0;
 
