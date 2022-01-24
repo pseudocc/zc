@@ -15,6 +15,7 @@ int32_t zvec_fit(zvec_t*);
 int32_t zvec_push(zvec_t*, const void*);
 int32_t zvec_pop(zvec_t*, void*);
 int32_t zvec_shift(zvec_t*, void*);
+int32_t zvec_unshift(zvec_t*, const void*);
 int32_t zvec_purge(zvec_t*, const void*);
 void zvec_rm(zvec_t*, zvec_it);
 int32_t zvec_add(zvec_t*, zvec_it, const void*);

@@ -72,6 +72,17 @@ int32_t zvec_shift(zvec_t* this, void* ref) {
   return size - 1;
 }
 
+int32_t zvec_unshift(zvec_t* this, const void* val) {
+  int32_t size;
+  zvec_it b = zvec_begin(this);
+  if (!this->lrem)
+    return zvec_add(this, b, val);
+  size = zvec_size(this);
+  memcpy(b, &val, this->soe);
+  this->lrem--;
+  return size + 1;
+}
+
 int32_t zvec_purge(zvec_t* this, const void* val) {
   int32_t n_deleted;
   zvec_it c, i, j, e;
