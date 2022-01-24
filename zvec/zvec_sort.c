@@ -51,7 +51,7 @@ void zvec_sort(zvec_t* this, zvec_it begin, zvec_it end, cmpf cmp) {
 
   cmp = cmp == NULL ? zcmp_obj : cmp;
   count = (end - begin) / this->soe;
-  qsort(begin, count, this->soe, cmp);
+  zvec_qsort(this, begin, end, cmp, tmp != NULL);
 }
 
 void zvec_swap(zvec_t* this, zvec_it it1, zvec_it it2) {
