@@ -1,6 +1,12 @@
 #include <stdio.h>
 #include <sys/time.h>
+#include <string.h>
 #include "./ztest.h"
+
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
 
 typedef long long ms_t;
 
@@ -11,10 +17,7 @@ ms_t diff_ms(struct timeval tv1, struct timeval tv2) {
   return sec * 1000 + usec / 1000;
 }
 
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
+char zerrbuf[ERR_BUF_SIZE];
 
 static void run_ut(ztest_unit unit) {
   int success = 0, ztest_state;
@@ -26,6 +29,7 @@ static void run_ut(ztest_unit unit) {
 
   for (int i = 0; i < unit.n_cases; i++) {
     zc = unit.cases[i];
+    memset(zerrbuf, ERR_BUF_SIZE, 0);
     gettimeofday(&tv1, NULL);
 
     switch (zc.entry()) {
@@ -44,6 +48,8 @@ static void run_ut(ztest_unit unit) {
     gettimeofday(&tv2, NULL);
     printf(" - %s - %s", unit.name, zc.name);
     printf(" - [%lld ms]\n", diff_ms(tv1, tv2));
+    if (*zerrbuf)
+      printf(ERR_INDENT RED "%s" RESET "\n", zerrbuf);
   }
 
   printf("\t%d/%d of the tests are passed.\n", success, unit.n_cases);

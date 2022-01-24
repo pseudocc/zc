@@ -28,6 +28,9 @@ typedef struct {
 
 #define DECL_UT(cases, name) { name, cases, ARRAY_SIZE(cases) }
 
+#define ERR_BUF_SIZE 1024
+#define ERR_INDENT "\t\t"
+extern char zerrbuf[ERR_BUF_SIZE];
 extern ztest_unit zvec_tests;
 
 #endif
