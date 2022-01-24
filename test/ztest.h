@@ -16,11 +16,14 @@ enum {
 #define YELLOW "\033[33m"
 #define BLUE "\033[34m"
 
+#define STRINGIZE_DETAIL(x) #x
+#define STRINGIZE(x) STRINGIZE_DETAIL(x)
+
 #define ERR_INDENT "\t\t"
 #define zerror(fmt, ...) \
-  fprintf(zerrbuf, ERR_INDENT fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+  sprintf(zerrbuf, ERR_INDENT fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 #define zthrow(fmt, ...) \
-  zerror(BLUE __FILE__ ":" __LINE__ RESET fmt __VA_OPT__(,) __VA_ARGS__); \
+  zerror(BLUE __FILE__ ":" STRINGIZE(__LINE__) RESET fmt __VA_OPT__(,) __VA_ARGS__); \
   return ZTEST_FAILURE
 #define zassert(cond, fmt, ...) \
   if (cond) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); }

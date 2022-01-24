@@ -26,9 +26,12 @@ static int insert_items() {
   int i;
 
   vec = zvec_new(0, sizeof(int));
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wint-conversion"
   zvec_push(vec, nums[1]);
   zvec_push(vec, nums[2]);
   zvec_unshift(vec, nums[0]);
+#pragma GCC diagnostic pop
   it = zvec_begin(vec);
 
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
