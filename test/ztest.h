@@ -10,6 +10,21 @@ enum {
   ZTEST_FAILURE
 };
 
+#define RESET "\033[0m"
+#define RED "\033[31m"
+#define GREEN "\033[32m"
+#define YELLOW "\033[33m"
+#define BLUE "\033[34m"
+
+#define ERR_INDENT "\t\t"
+#define zerror(fmt, ...) \
+  fprintf(zerrbuf, ERR_INDENT fmt "\n" __VA_OPT__(,) __VA_ARGS__)
+#define zthrow(fmt, ...) \
+  zerror(BLUE __FILE__ ":" __LINE__ RESET fmt __VA_OPT__(,) __VA_ARGS__); \
+  return ZTEST_FAILURE
+#define zassert(cond, fmt, ...) \
+  if (cond) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); }
+
 typedef int (*ztest_method)(void);
 typedef struct {
   char name[64];
@@ -29,7 +44,6 @@ typedef struct {
 #define DECL_UT(cases, name) { name, cases, ARRAY_SIZE(cases) }
 
 #define ERR_BUF_SIZE 1024
-#define ERR_INDENT "\t\t"
 extern char zerrbuf[ERR_BUF_SIZE];
 extern ztest_unit zvec_tests;
 

@@ -3,11 +3,6 @@
 #include <string.h>
 #include "./ztest.h"
 
-#define RESET "\033[0m"
-#define RED "\033[31m"
-#define GREEN "\033[32m"
-#define YELLOW "\033[33m"
-
 typedef long long ms_t;
 
 ms_t diff_ms(struct timeval tv1, struct timeval tv2) {
@@ -49,7 +44,7 @@ static void run_ut(ztest_unit unit) {
     printf(" - %s - %s", unit.name, zc.name);
     printf(" - [%lld ms]\n", diff_ms(tv1, tv2));
     if (*zerrbuf)
-      printf(ERR_INDENT RED "%s" RESET "\n", zerrbuf);
+      printf("%s", zerrbuf);
   }
 
   printf("\t%d/%d of the tests are passed.\n", success, unit.n_cases);
