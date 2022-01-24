@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 #include "./zvec_intl.h"
 
 static inline int zvec_cmp(const void* l, const void* r,
@@ -6,7 +7,7 @@ static inline int zvec_cmp(const void* l, const void* r,
   return rcmp ? -cmp(l, r) : cmp(l, r);
 }
 
-static void zvec_partition(zvec_t* this, zvec_it p, zvec_it r,
+static zvec_it zvec_partition(zvec_t* this, zvec_it p, zvec_it r,
     cmpf cmp, int rcmp) {
   zvec_it i, j;
   zvec_dec(this, &r);
@@ -30,7 +31,7 @@ static void zvec_qsort(zvec_t* this, zvec_it p, zvec_it r,
   if (p < r) {
     q = zvec_partition(this, p, r, cmp, rcmp);
     zvec_qsort(this, p, q - this->soe, cmp, rcmp);
-    zvec_qsort(this, q + this->soe, r);
+    zvec_qsort(this, q + this->soe, r, cmp, rcmp);
   }
 }
 
@@ -77,7 +78,7 @@ void zvec_reverse(zvec_t* this, zvec_it begin, zvec_it end) {
   zvec_dec(this, &end);
   while (begin < end) {
     zvec_swap(this, begin, end);
-    zvec_dec(this &end);
-    zvec_dec(this &begin);
+    zvec_dec(this, &end);
+    zvec_dec(this, &begin);
   }
 }

@@ -19,7 +19,7 @@ zvec_it zvec_at(zvec_t* this, int32_t index) {
   return this->head + offset;
 }
 
-int32_t zvec_index(zvec_t* this, zvect_it it) {
+int32_t zvec_index(zvec_t* this, zvec_it it) {
   if (it >= zvec_end(this))
     return -1;
   return (it - zvec_begin(this)) / this->soe;

@@ -5,6 +5,7 @@
 #include "include/zvec.h"
 
 #define LREM_RATIO_ORDER 3
+#define MIN_CAPACITY 16
 #define RAR_MIN_UNIT 4
 
 struct zvec {

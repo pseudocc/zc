@@ -8,12 +8,12 @@ void zvec_intl_rar(zvec_t* this, int32_t unit) {
   size = zvec_size(this);
   sweep = size / unit;
   remain = size % unit;
-  src = zvec_begin(this);
-  tgt = zvec_mov(this, src, -unit);
+  tgt = src = zvec_begin(this);
+  zvec_mov(this, &tgt, -unit);
   while (sweep--) {
     memcpy(tgt, src, unit * this->soe);
     tgt = src;
-    src = zvec_mov(this, src, unit);
+    zvec_mov(this, &src, unit);
   }
 
   if (remain)

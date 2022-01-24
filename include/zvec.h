@@ -36,7 +36,7 @@ int32_t zvec_cap(zvec_t*);
 
 void zvec_sort(zvec_t*, zvec_it, zvec_it, cmpf);
 void zvec_swap(zvec_t*, zvec_it, zvec_it);
-void zvec_reverse(zvec_it*, zvec_it, zvec_it);
+void zvec_reverse(zvec_t*, zvec_it, zvec_it);
 
 #define zvec_get(it, ty) *(ty*)it
 #define zvec_set(it, val, ty) zvec_get(it, ty) = val

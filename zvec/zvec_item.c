@@ -74,7 +74,7 @@ int32_t zvec_shift(zvec_t* this, void* ref) {
 
 int32_t zvec_purge(zvec_t* this, const void* val) {
   int32_t n_deleted;
-  zvec_it c, i, e;
+  zvec_it c, i, j, e;
 
   e = zvec_end(this);
   c = i = zvec_find(this, zvec_begin(this), val);

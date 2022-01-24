@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include "./zvec_intl.h"
 
-#define MIN_CAPACITY 16
-
 static inline
 void zvec_priv_clear(zvec_t* this, int32_t cap) {
   this->lrem = cap >> LREM_RATIO_ORDER;
@@ -24,7 +22,7 @@ zvec_t* zvec_new(int32_t cap, uint32_t soe) {
     return NULL;
   }
 
-  inst->soe = n_bytes;
+  inst->soe = soe;
   inst->cap = cap;
   zvec_priv_clear(inst, cap);
 
@@ -46,7 +44,7 @@ void zvec_clear(zvec_t* this) {
 }
 
 int32_t zvect_size(zvec_t* this) {
-  return this->cap - this.lrem - this.rrem;
+  return this->cap - this->lrem - this->rrem;
 }
 
 int32_t zvec_cap(zvec_t* this) {
