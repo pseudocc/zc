@@ -7,7 +7,7 @@
 #define ZCMP_IMPL_NUM(var, ty) \
   static int ZCMP_FUNC(ty)(const void* l, const void* r) \
   { return ZCMP_CMP(*(ty*)l, *(ty*)r); } \
-  static cmpf var = &ZCMP_FUNC_NAME(ty); \
+  cmpf var = &ZCMP_FUNC(ty); \
 
 ZCMP_IMPL_NUM(zcmp_i8, int8_t)
 ZCMP_IMPL_NUM(zcmp_i16, int16_t)
@@ -28,5 +28,5 @@ static int zcmp_priv_str(const void* l, const void* r) {
   return strcmp(lstr, rstr);
 }
 
-static cmpf zcmp_str = &zcmp_priv_str;
-static cmpf zcmp_obj = zcmp_u64;
+cmpf zcmp_str = &zcmp_priv_str;
+cmpf zcmp_obj = &ZCMP_FUNC(uint64_t);
