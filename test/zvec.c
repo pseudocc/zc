@@ -4,6 +4,7 @@
 #define ZVEC_UTNAME "VECTOR"
 
 static int feels_good_man() {
+  zassert_eq(11, 11, "November", "%d");
   return ZTEST_SUCCESS;
 }
 
@@ -11,10 +12,11 @@ static int init_empty() {
   const int capacity = 8;
   zvec_t* vec;
   vec = zvec_new(capacity, sizeof(int));
-  zassert(vec != NULL, "vec != NULL");
-  zassert(zvec_begin(vec) == zvec_end(vec), "begin == end");
-  zassert(zvec_cap(vec) == capacity, "capacity == %d", capacity);
-  zassert(zvec_size(vec) == 0, "size == 0");
+  zassert(vec != NULL, "vec should not be NULL");
+  zassert(zvec_begin(vec) == zvec_end(vec),
+    "begin and end should be the same");
+  zassert_eq(zvec_cap(vec), capacity, "capacity", "%d");
+  zassert_eq(zvec_size(vec), 0, "size", "%d");
   zvec_free(vec);
   return ZTEST_SUCCESS;
 }
@@ -23,7 +25,7 @@ static int insert_items() {
   const int nums[] = { 92, 11, 29 };
   zvec_t* vec;
   zvec_it it;
-  int i;
+  int i, z;
 
   vec = zvec_new(0, sizeof(int));
 #pragma GCC diagnostic push
@@ -35,8 +37,8 @@ static int insert_items() {
   it = zvec_begin(vec);
 
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
-    zassert(zvec_get(it, int) != nums[i],
-      "vec[%d] == %d", i, nums[i]);
+    z = zvec_get(it, int);
+    zassert_eq(z, nums[i], "vec[%d]", "%d", i);
     zvec_inc(vec, &it);
   }
   

@@ -28,6 +28,9 @@ enum {
   return ZTEST_FAILURE
 #define zassert(cond, fmt, ...) \
   if (!(cond)) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); }
+#define zassert_eq(actual, expected, desc, fmt, ...) \
+  zassert(actual == expected, desc ": expect " fmt "but got " \
+  fmt " instead" __VA_OPT__(,) __VA_ARGS__, expected, actual)
 
 typedef int (*ztest_method)(void);
 typedef struct {
