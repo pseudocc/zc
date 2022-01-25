@@ -1,10 +1,12 @@
-name: C CI
+name: ZC CI
 
 on:
   push:
     branches: [ aloof ]
   pull_request:
     branches: [ aloof ]
+  schedule:
+    - cron: '29 11 * * *'
 
 jobs:
   build:
