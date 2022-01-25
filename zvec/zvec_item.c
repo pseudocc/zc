@@ -154,17 +154,19 @@ int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
   b = zvec_begin(this);
   e = zvec_end(this);
 
-  if (it < b || it >= e || !zvec_push(this, val))
-    return 0;
+  if (it < b || it > e)
+    return -1; // invalid arguments
+  if (!this->rrem && !zvec_priv_grow(this))
+    return 0; // out of memory
 
   b = e;
-  zvec_dec(this, &e);
-  while (it < b) {
-    memcpy(b, e, this->soe);
+  zvec_dec(this, &b);
+  while (it < e) {
+    memcpy(e, b, this->soe);
     zvec_dec(this, &b);
     zvec_dec(this, &e);
   }
-  memcpy(b, val, this->soe);
+  memcpy(e, &val, this->soe);
 
   return zvec_size(this);
 }

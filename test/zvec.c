@@ -22,7 +22,7 @@ static int init_empty() {
 }
 
 static int insert_items() {
-  const int nums[] = { 92, 11, 29 };
+  const int nums[] = { 19, 92, 11, 29 };
   zvec_t* vec;
   zvec_it it;
   int i, z;
@@ -30,9 +30,12 @@ static int insert_items() {
   vec = zvec_new(0, sizeof(int));
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wint-conversion"
-  zvec_push(vec, nums[1]);
   zvec_push(vec, nums[2]);
+  zvec_push(vec, nums[3]);
   zvec_unshift(vec, nums[0]);
+  it = zvec_begin(vec);
+  zvec_inc(vec, &it);
+  zvec_add(vec, it, nums[1]);
 #pragma GCC diagnostic pop
   it = zvec_begin(vec);
 
