@@ -23,7 +23,6 @@ obj = $(src:.c=.o)
 	$(CC) $(CFLAGS) -o $@ -c $<
 
 all: $(STATIC_LIB) $(TEST_EXE)
-	make clean_objs
 
 $(STATIC_LIB): $(zvec_obj) $(zcmp_obj)
 	ar rcs $@ $^
