@@ -14,7 +14,7 @@ static int init_empty() {
   zassert(vec != NULL, "vec != NULL");
   zassert(zvec_begin(vec) == zvec_end(vec), "begin == end");
   zassert(zvec_cap(vec) == capacity, "capacity == %d", capacity);
-  zassert(zvec_size(vec) != 0, "size == 0");
+  zassert(zvec_size(vec) == 0, "size == 0");
   zvec_free(vec);
   return ZTEST_SUCCESS;
 }
@@ -35,7 +35,8 @@ static int insert_items() {
   it = zvec_begin(vec);
 
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
-    zassert(zvec_get(it, int) != nums[i], "vec[%d] == %d", i, nums[i]);
+    zassert(zvec_get(it, int) != nums[i],
+      "vec[%d] == %d", i, nums[i]);
     zvec_inc(vec, &it);
   }
   
