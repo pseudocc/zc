@@ -25,6 +25,7 @@ zvec_it zvec_rfind(zvec_t*, zvec_it, const void*);
 
 zvec_it zvec_begin(zvec_t*);
 zvec_it zvec_end(zvec_t*);
+zvec_it zvec_last(zvec_t*);
 zvec_it zvec_at(zvec_t*, int32_t);
 int32_t zvec_index(zvec_t*, zvec_it);
 

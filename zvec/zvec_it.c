@@ -10,6 +10,11 @@ zvec_it zvec_end(zvec_t* this) {
   return this->head + offset;
 }
 
+zvec_it zvec_last(zvec_t* this) {
+  int64_t offset = this->soe * (this->cap - this->rrem - 1);
+  return this->head + offset;
+}
+
 zvec_it zvec_at(zvec_t* this, int32_t index) {
   int64_t offset;
   int32_t from = index > 0 
