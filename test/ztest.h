@@ -23,10 +23,11 @@ enum {
 #define zerror(fmt, ...) \
   sprintf(zerrbuf, ERR_INDENT fmt "\n" __VA_OPT__(,) __VA_ARGS__)
 #define zthrow(fmt, ...) \
-  zerror(BLUE __FILE__ ":" STRINGIZE(__LINE__) RESET fmt __VA_OPT__(,) __VA_ARGS__); \
+  zerror(BLUE __FILE__ ":" STRINGIZE(__LINE__) RESET "\t" \
+    fmt __VA_OPT__(,) __VA_ARGS__); \
   return ZTEST_FAILURE
 #define zassert(cond, fmt, ...) \
-  if (cond) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); }
+  if (!(cond)) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); }
 
 typedef int (*ztest_method)(void);
 typedef struct {
