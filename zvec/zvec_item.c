@@ -58,7 +58,7 @@ int32_t zvec_pop(zvec_t* this, void* ref) {
   int32_t size = zvec_size(this);
   if (!size)
     return 0;
-  memcpy(ref, zvec_end(this), this->soe);
+  memcpy(ref, zvec_last(this), this->soe);
   this->rrem++;
   return size - 1;
 }
