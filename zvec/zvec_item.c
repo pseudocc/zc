@@ -77,6 +77,7 @@ int32_t zvec_unshift(zvec_t* this, const void* val) {
   zvec_it b = zvec_begin(this);
   if (!this->lrem)
     return zvec_add(this, b, val);
+  zvec_dec(this, &b);
   size = zvec_size(this);
   memcpy(b, &val, this->soe);
   this->lrem--;
