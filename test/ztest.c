@@ -60,5 +60,5 @@ int main() {
   int failed, i;
   for (failed = 0, i = 0; i < ARRAY_SIZE(cats); i++)
     failed += run_ut(cats[i]);
-  return failed == 0; 
+  return failed != 0; 
 }
