@@ -65,10 +65,10 @@ static int remove_items() {
   zvec_t* vec = zvec_from(nums, ARRAY_SIZE(nums));
 
   zvec_shift(vec, &actual);
-  zassert_eq(nums[0], actual, "shift", "%d");
+  zassert_eq(actual, nums[0], "shift", "%d");
 
   zvec_pop(vec, &actual);
-  zassert_eq(nums[ARRAY_SIZE(nums) - 1], actual, "last", "%d");
+  zassert_eq(actual, nums[ARRAY_SIZE(nums) - 1], "last", "%d");
 
   zvec_purge(vec, purge_num);
   it = zvec_begin(vec);
@@ -90,7 +90,8 @@ static int remove_items() {
 static ztest_case cases[] = {
   { "BE HAPPY EVERYDAY", &feels_good_man },
   { "CREATE EMPTY VECTOR", &init_empty },
-  { "PUSH & UNSHIFT", &insert_items }
+  { "PUSH & UNSHIFT", &insert_items },
+  { "REMOVE ITEMS", &remove_items }
 };
 
 ztest_unit zvec_tests = DECL_UT(cases, ZVEC_UTNAME);
