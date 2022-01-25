@@ -14,7 +14,7 @@ ms_t diff_ms(struct timeval tv1, struct timeval tv2) {
 
 char zerrbuf[ERR_BUF_SIZE];
 
-static void run_ut(ztest_unit unit) {
+static int run_ut(ztest_unit unit) {
   int success = 0, ztest_state;
   struct timeval tv0, tv1, tv2;
   ztest_case zc;
@@ -34,6 +34,7 @@ static void run_ut(ztest_unit unit) {
       break;
     case ZTEST_PARTIAL:
       printf("\t" YELLOW "PARTIAL" RESET);
+      success++;
       break;
     case ZTEST_FAILURE:
       printf("\t" RED "FAILURE" RESET);
@@ -49,9 +50,15 @@ static void run_ut(ztest_unit unit) {
 
   printf("\t%d/%d of the tests are passed.\n", success, unit.n_cases);
   printf("Total time elasped %lld ms.\n", diff_ms(tv0, tv2));
+
+  return unit.n_cases - success;
 }
 
 int main() {
-  run_ut(zvec_tests);
-  return 0; 
+  // all test categories to be included in the unit tests
+  ztest_unit cats[] = { zvec_tests };
+  int failed, i;
+  for (failed = 0, i = 0; i < ARRAY_SIZE(cats); i++)
+    failed += run_ut(cats[i]);
+  return failed == 0; 
 }
