@@ -109,6 +109,30 @@ static int iterator_ops() {
   return ZTEST_SUCCESS;
 }
 
+static int find_items() {
+  const int nums[] = { 1, 3, 7, 4, 5, 9 };
+  zvec_t* vec;
+  zvec_it it;
+  int i;
+
+  i = 2;
+  vec = zvec_from(nums, ARRAY_SIZE(nums));
+  it = zvec_find(vec, zvec_begin(vec), nums[i]);
+  zassert_eq(zvec_index(vec, it), i,
+   "vec[%d] is %d", "%d", i, nums[i]);
+
+  i = 1;
+  it = zvec_find(vec, it, nums[i]);
+  zassert(it == NULL, "not found should return NULL");
+
+  it = zvec_rfind(vec, zvec_last(vec), nums[i]);
+  zassert_eq(zvec_index(vec, it), i,
+   "vec[%d] is %d", "%d", i, nums[i]);
+
+  zvec_free(vec);
+  return ZTEST_SUCCESS;
+}
+
 #pragma GCC diagnostic pop
 
 static ztest_case cases[] = {
@@ -116,7 +140,8 @@ static ztest_case cases[] = {
   { "CREATE EMPTY VECTOR", &init_empty },
   { "PUSH & UNSHIFT", &insert_items },
   { "REMOVE ITEMS", &remove_items },
-  { "ITERATOR", &iterator_ops }
+  { "VECTOR ITERATOR", &iterator_ops },
+  { "FIND ITEMS", &find_items }
 };
 
 ztest_unit zvec_tests = DECL_UT(cases, ZVEC_UTNAME);
