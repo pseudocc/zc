@@ -94,7 +94,7 @@ int32_t zvec_purge(zvec_t* this, const void* val) {
 
   while (i != e) {
     zvec_inc(this, &i);
-    while (i < e && !memcmp(i, val, this->soe)) {
+    while (i < e && !memcmp(i, &val, this->soe)) {
       zvec_inc(this, &i);
       n_deleted++;
     }
@@ -102,12 +102,12 @@ int32_t zvec_purge(zvec_t* this, const void* val) {
       break;
     j = i;
     zvec_inc(this, &j);
-    while (j < e && memcmp(j, val, this->soe))
+    while (j < e && memcmp(j, &val, this->soe))
       zvec_inc(this, &j);
     
     int32_t n_bytes, unit, sweeps, remain;
     n_bytes = j - i;
-    unit = c - i;
+    unit = i - c;
     sweeps = n_bytes / unit;
     remain = n_bytes % unit;
 
