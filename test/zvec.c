@@ -85,13 +85,38 @@ static int remove_items() {
   return ZTEST_SUCCESS;
 }
 
+static int iterator_ops() {
+  const int nums[] = { 4, 5, 9, 1, 0, 7 };
+  zvec_t* vec;
+  zvec_it it;
+  int actual, i;
+
+  vec = zvec_from(nums, ARRAY_SIZE(nums));
+  it = zvec_at(vec, i = 2);
+  actual = zvec_get(it, int);
+  zassert_eq(actual, nums[i], "vec[%d]::get", "%d", i);
+
+  zvec_mov(vec, &it, i);
+  zvec_set(it, i, int);
+  actual = zvec_get(it, int);
+  zassert_eq(actual, i, "vec[%d]::set", "%d", i * 2);
+
+  zvec_dec(vec, &it);
+  zassert_eq(zvec_index(vec, it), i * 2 - 1,
+    "iterator to index", "%d");
+
+  zvec_free(vec);
+  return ZTEST_SUCCESS;
+}
+
 #pragma GCC diagnostic pop
 
 static ztest_case cases[] = {
   { "BE HAPPY EVERYDAY", &feels_good_man },
   { "CREATE EMPTY VECTOR", &init_empty },
   { "PUSH & UNSHIFT", &insert_items },
-  { "REMOVE ITEMS", &remove_items }
+  { "REMOVE ITEMS", &remove_items },
+  { "ITERATOR", &iterator_ops }
 };
 
 ztest_unit zvec_tests = DECL_UT(cases, ZVEC_UTNAME);
