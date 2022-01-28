@@ -36,7 +36,7 @@ static int insert_items() {
   const int nums[] = { 19, 92, 11, 29 };
   zvec_t* vec;
   zvec_it it;
-  int i, z;
+  int actual, i;
 
   vec = zvec_new(0, sizeof(int));
   zvec_push(vec, nums[2]);
@@ -48,8 +48,8 @@ static int insert_items() {
 
   it = zvec_begin(vec);
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
-    z = zvec_get(it, int);
-    zassert_eq(z, nums[i], "vec[%d]", "%d", i);
+    actual = zvec_get(it, int);
+    zassert_eq(actual, nums[i], "vec[%d]", "%d", i);
     zvec_inc(vec, &it);
   }
   
@@ -133,6 +133,41 @@ static int find_items() {
   return ZTEST_SUCCESS;
 }
 
+static int sort_items() {
+  int nums[] = { 2, 4, 7, 1, 3, 4, 8, 0 };
+  const int n = ARRAY_SIZE(nums);
+  zvec_t* v1;
+  zvec_t* v2;
+  int actual, i;
+
+  v1 = zvec_from(nums, n);
+  v2 = zvec_from(nums, n);
+
+  zvec_sort(v1, zvec_begin(v1), zvec_end(v1), zcmp_i32);
+  zvec_sort(v2, zvec_end(v2), zvec_begin(v2), zcmp_i32);
+  qsort(nums, n, sizeof(int), zcmp_i32);
+
+  for (i = 0; i < n; i++) {
+    actual = zvec_get(zvec_at(v1, i), int);
+    zassert_eq(actual, nums[i], "sorted vec[%d]", "%d", i);
+
+    actual = zvec_get(zvec_at(v2, i), int);
+    zassert_eq(actual, nums[n - i - 1],
+      "rsorted vec[%d]", "%d", i);
+  }
+
+  zvec_reverse(v2, zvec_begin(v2), zvec_end(v2));
+  for (i = 0; i < n; i++) {
+    actual = zvec_get(zvec_at(v2, i), int);
+    zassert_eq(actual, nums[i],
+      "rrsoted vec[%d]", "%d", i);
+  }
+
+  zvec_free(v1);
+  zvec_free(v2);
+  return ZTEST_SUCCESS;
+}
+
 #pragma GCC diagnostic pop
 
 static ztest_case cases[] = {
@@ -141,7 +176,8 @@ static ztest_case cases[] = {
   { "PUSH & UNSHIFT", &insert_items },
   { "REMOVE ITEMS", &remove_items },
   { "VECTOR ITERATOR", &iterator_ops },
-  { "FIND ITEMS", &find_items }
+  { "FIND ITEMS", &find_items },
+  { "SORT & REVERSE", &sort_items }
 };
 
 ztest_unit zvec_tests = DECL_UT(cases, ZVEC_UTNAME);
