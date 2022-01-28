@@ -15,6 +15,7 @@ ms_t diff_ms(struct timeval tv1, struct timeval tv2) {
 }
 
 char zerrbuf[ERR_BUF_SIZE];
+char* last_assert;
 
 sigjmp_buf point;
 static void segfault_handler(int sig, siginfo_t* si, void* vp) {
@@ -24,7 +25,11 @@ static void segfault_handler(int sig, siginfo_t* si, void* vp) {
 static int run_case(ztest_case* p) {
   if (!setjmp(point))
     return p->entry();
-  zerror("Segmentaion fault");
+  // may handle other core dumps in the future
+  if (last_assert)
+    zerror("%s\tsegfault after", last_assert);
+  else
+    zerror("segfault before the 1st assertion");
   return ZTEST_FAILURE;
 }
 
@@ -39,6 +44,7 @@ static int run_ut(ztest_unit unit) {
   for (int i = 0; i < unit.n_cases; i++) {
     zc = unit.cases[i];
     memset(zerrbuf, ERR_BUF_SIZE, 0);
+    last_assert = NULL;
     gettimeofday(&tv1, NULL);
 
     switch (run_case(&zc)) {
