@@ -30,6 +30,10 @@ $(STATIC_LIB): $(zvec_obj) $(zcmp_obj)
 $(TEST_EXE): $(test_obj) $(STATIC_LIB)
 	$(CC) $(CFLAGS) $^ -o $@
 
+.PHONY: debug
+debug:
+	make clean && make DEBUG=1
+
 .PHONY: clean
 clean:
 	rm -f $(obj) $(STATIC_LIB) $(TEST_EXE)
