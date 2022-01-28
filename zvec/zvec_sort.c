@@ -22,6 +22,7 @@ static zvec_it zvec_partition(zvec_t* this, zvec_it p, zvec_it r,
     zvec_inc(this, &j);
   }
 
+  zvec_swap(this, i, j);
   return i;
 }
 
@@ -36,7 +37,6 @@ static void zvec_qsort(zvec_t* this, zvec_it p, zvec_it r,
 }
 
 void zvec_sort(zvec_t* this, zvec_it begin, zvec_it end, cmpf cmp) {
-  size_t count;
   zvec_it tmp = NULL;
 
   if (begin > end) {
@@ -51,7 +51,6 @@ void zvec_sort(zvec_t* this, zvec_it begin, zvec_it end, cmpf cmp) {
   }
 
   cmp = cmp == NULL ? zcmp_obj : cmp;
-  count = (end - begin) / this->soe;
   zvec_qsort(this, begin, end, cmp, tmp != NULL);
 }
 
