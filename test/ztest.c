@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <sys/time.h>
 #include <string.h>
+#include <setjmp.h>
+#include <signal.h>
 #include "./ztest.h"
 
 typedef long long ms_t;
@@ -13,6 +15,18 @@ ms_t diff_ms(struct timeval tv1, struct timeval tv2) {
 }
 
 char zerrbuf[ERR_BUF_SIZE];
+
+sigjmp_buf point;
+static void segfault_handler(int sig, siginfo_t* si, void* vp) {
+  longjmp(point, 1);
+}
+
+static int run_case(ztest_case* p) {
+  if (!setjmp(point))
+    return p->entry();
+  zerror("Segmentaion fault");
+  return ZTEST_FAILURE;
+}
 
 static int run_ut(ztest_unit unit) {
   int success = 0, ztest_state;
@@ -27,7 +41,7 @@ static int run_ut(ztest_unit unit) {
     memset(zerrbuf, ERR_BUF_SIZE, 0);
     gettimeofday(&tv1, NULL);
 
-    switch (zc.entry()) {
+    switch (run_case(&zc)) {
     case ZTEST_SUCCESS:
       printf("\t" GREEN "SUCCESS" RESET);
       success++;
@@ -57,7 +71,16 @@ static int run_ut(ztest_unit unit) {
 int main() {
   // all test categories to be included in the unit tests
   ztest_unit cats[] = { zvec_tests };
+  struct sigaction sact;
   int failed, i;
+
+  memset(&sact, 0, sizeof(struct sigaction));
+  sigemptyset(&sact.sa_mask);
+  sact.sa_flags = SA_NODEFER;
+  sact.sa_sigaction = &segfault_handler;
+
+  sigaction(SIGSEGV, &sact, NULL);
+
   for (failed = 0, i = 0; i < ARRAY_SIZE(cats); i++)
     failed += run_ut(cats[i]);
   return failed != 0; 
