@@ -27,7 +27,8 @@ enum {
     fmt __VA_OPT__(,) __VA_ARGS__); \
   return ZTEST_FAILURE
 #define zassert(cond, fmt, ...) \
-  if (!(cond)) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); }
+  if (!(cond)) { zthrow(fmt __VA_OPT__(,) __VA_ARGS__); } \
+  else last_assert = BLUE __FILE__ ":" STRINGIZE(__LINE__) RESET;
 #define zassert_eq(actual, expected, desc, fmt, ...) \
   zassert(actual == expected, desc ": expected " fmt " but got " \
   fmt " instead" __VA_OPT__(,) __VA_ARGS__, expected, actual)
@@ -52,6 +53,7 @@ typedef struct {
 
 #define ERR_BUF_SIZE 1024
 extern char zerrbuf[ERR_BUF_SIZE];
-extern ztest_unit zvec_tests;
+extern char* last_assert;
 
+extern ztest_unit zvec_tests;
 #endif
