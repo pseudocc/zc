@@ -31,8 +31,9 @@ static void zvec_qsort(zvec_t* this, zvec_it p, zvec_it r,
   zvec_it q;
   if (p < r) {
     q = zvec_partition(this, p, r, cmp, rcmp);
-    zvec_qsort(this, p, q - this->soe, cmp, rcmp);
-    zvec_qsort(this, q + this->soe, r, cmp, rcmp);
+    zvec_qsort(this, p, q, cmp, rcmp);
+    zvec_inc(this, &q);
+    zvec_qsort(this, q, r, cmp, rcmp);
   }
 }
 
@@ -74,10 +75,9 @@ void zvec_reverse(zvec_t* this, zvec_it begin, zvec_it end) {
     end = tmp;
   }
   
-  zvec_dec(this, &end);
   while (begin < end) {
-    zvec_swap(this, begin, end);
     zvec_dec(this, &end);
-    zvec_dec(this, &begin);
+    zvec_swap(this, begin, end);
+    zvec_inc(this, &begin);
   }
 }
