@@ -17,7 +17,7 @@ zvec_it zvec_last(zvec_t* this) {
 
 zvec_it zvec_at(zvec_t* this, int32_t index) {
   int64_t offset;
-  int32_t from = index > 0 
+  int32_t from = index >= 0 
     ? this->lrem
     : this->cap - this->lrem;
   offset = (from + index) * this->soe;
@@ -25,7 +25,7 @@ zvec_it zvec_at(zvec_t* this, int32_t index) {
 }
 
 int32_t zvec_index(zvec_t* this, zvec_it it) {
-  if (it >= zvec_end(this))
+  if (it == NULL || it >= zvec_end(this))
     return -1;
   return (it - zvec_begin(this)) / this->soe;
 }
