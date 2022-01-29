@@ -19,7 +19,7 @@ zvec_it zvec_at(zvec_t* this, int32_t index) {
   int64_t offset;
   int32_t from = index >= 0 
     ? this->lrem
-    : this->cap - this->lrem;
+    : this->cap - this->rrem;
   offset = (from + index) * this->soe;
   return this->head + offset;
 }

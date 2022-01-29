@@ -43,7 +43,7 @@ static int run_ut(ztest_unit unit) {
 
   for (int i = 0; i < unit.n_cases; i++) {
     zc = unit.cases[i];
-    memset(zerrbuf, ERR_BUF_SIZE, 0);
+    memset(zerrbuf, 0, ERR_BUF_SIZE);
     last_assert = NULL;
     gettimeofday(&tv1, NULL);
 

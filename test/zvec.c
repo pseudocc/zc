@@ -105,6 +105,9 @@ static int iterator_ops() {
   zassert_eq(zvec_index(vec, it), i * 2 - 1,
     "iterator to index", "%d");
 
+  zassert_eq(zvec_at(vec, -1), zvec_last(vec),
+    "vec[-1] should be the last one", "%p");
+
   zvec_free(vec);
   return ZTEST_SUCCESS;
 }
