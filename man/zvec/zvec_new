@@ -1,0 +1,60 @@
+.\" Copyright 2022 Yu Ze (pseudoc@163.com)
+.\" MIT LICENSE
+.\"
+.TH ZVEC_NEW 3 2022-01-29 "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_new \- create instance of opaque type
+.IR zvec_t .
+.SH SYNOPSIS
+.nf
+.B #include <zvec.h>
+.P
+.BI "zvec_t* zvec_new(int32_t " cap ", uint32_t " soe ");
+.fi
+.SH DESCRIPTION
+The
+.BR zvec_new()
+function allocates
+.I cap
+*
+.I soe
+bytes for the internal void pointer when
+.I cap
+is no less than 0.
+To use the default capacity just input 0.
+.P
+.I cap
+is the initial capacity for the vector.
+.P
+.I soe
+is the size of the element.
+.P
+This function uses
+.BR malloc()
+to allocate related memory blocks.
+.SH RETURN VALUE
+The
+.BR zvec_new()
+function return a pointer to the instance.
+On error, it returns
+.BR NULL .
+.SH ERROR
+.B malloc()
+Out of memory.
+.P
+.I cap
+is negative.
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_new ()
+T}	Thread safety	MT-Safe
+.TE
+.SH SEE ALSO
+.BR malloc(3)
