@@ -156,6 +156,7 @@ static int sort_items() {
       "rsorted vec[%d]", "%d", i);
   }
 
+  zassert(1, "success mark");
   zvec_reverse(v2, zvec_begin(v2), zvec_end(v2));
   for (i = 0; i < n; i++) {
     actual = zvec_get(zvec_at(v2, i), int);
