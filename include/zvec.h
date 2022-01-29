@@ -10,6 +10,8 @@ typedef void* zvec_it;
 zvec_t* zvec_new(int32_t, uint32_t);
 void zvec_free(zvec_t*);
 void zvec_clear(zvec_t*);
+int32_t zvec_size(zvec_t*);
+int32_t zvec_cap(zvec_t*);
 
 int32_t zvec_fit(zvec_t*);
 int32_t zvec_push(zvec_t*, const void*);
@@ -32,9 +34,6 @@ int32_t zvec_index(zvec_t*, zvec_it);
 void zvec_inc(zvec_t*, zvec_it*);
 void zvec_dec(zvec_t*, zvec_it*);
 void zvec_mov(zvec_t*, zvec_it*, int32_t);
-
-int32_t zvec_size(zvec_t*);
-int32_t zvec_cap(zvec_t*);
 
 void zvec_sort(zvec_t*, zvec_it, zvec_it, cmpf);
 void zvec_swap(zvec_t*, zvec_it, zvec_it);
