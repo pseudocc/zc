@@ -1,0 +1,35 @@
+.\" Copyright [YEAR] [AUTHOR] ([EMAIL])
+.\" MIT LICENSE
+.\"
+.TH ZVEC_RM_RANGE 3 [yyyy-MM-dd] "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_rm_range \- remove elements in vector within certain range.
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "int32_t zvec_rm_range(zvec_t* " this ",
+.BI zvec_it " begin ", zvec_it " end ");
+.SH DESCRIPTION
+.SS PARAMETERS
+.SH RETURN VALUE
+The
+.BR zvec_rm_range ()
+function returns a non-negative number
+regards the new size of the vector on success, return
+.I -1
+when any of the input arguments is invalid.
+.SH ERROR
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_rm_range ()
+T}	Thread safety	MT-Safe
+.TE
+.SH EXAMPLE
+.SH SEE ALSO
