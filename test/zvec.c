@@ -6,13 +6,6 @@
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wint-conversion"
 
-static zvec_t* zvec_from(const int* nums, int n) {
-  zvec_t* vec = zvec_new(0, sizeof(int));
-  for (int i = 0; i < n; i++)
-    zvec_push(vec, nums[i]);
-  return vec;
-}
-
 static int feels_good_man() {
   zassert_eq(11, 11, "November", "%d");
   return ZTEST_SUCCESS;
@@ -62,7 +55,7 @@ static int remove_items() {
   const int purge_num = 2;
   int actual, i;
   zvec_it it;
-  zvec_t* vec = zvec_from(nums, ARRAY_SIZE(nums));
+  zvec_t* vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
 
   zvec_shift(vec, &actual);
   zassert_eq(actual, nums[0], "shift", "%d");
@@ -91,7 +84,7 @@ static int iterator_ops() {
   zvec_it it;
   int actual, i;
 
-  vec = zvec_from(nums, ARRAY_SIZE(nums));
+  vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
   it = zvec_at(vec, i = 2);
   actual = zvec_get(it, int);
   zassert_eq(actual, nums[i], "vec[%d]::get", "%d", i);
@@ -119,7 +112,7 @@ static int find_items() {
   int i;
 
   i = 2;
-  vec = zvec_from(nums, ARRAY_SIZE(nums));
+  vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
   it = zvec_find(vec, zvec_begin(vec), nums[i]);
   zassert_eq(zvec_index(vec, it), i,
    "vec[%d] is %d", "%d", i, nums[i]);
@@ -143,8 +136,8 @@ static int sort_items() {
   zvec_t* v2;
   int actual, i;
 
-  v1 = zvec_from(nums, n);
-  v2 = zvec_from(nums, n);
+  v1 = zvec_from(nums, n, sizeof(int));
+  v2 = zvec_from(nums, n, sizeof(int));
 
   zvec_sort(v1, zvec_begin(v1), zvec_end(v1), zcmp_i32);
   zvec_sort(v2, zvec_end(v2), zvec_begin(v2), zcmp_i32);

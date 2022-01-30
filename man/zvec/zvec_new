@@ -57,4 +57,11 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH SEE ALSO
-.BR malloc(3)
+.B malloc(3)
+the allocation method.
+.P
+.B zvec_free(3)
+free the resources referenced by the instance.
+.P
+.B zvec_slice(3)
+create sub-vector from existing one.

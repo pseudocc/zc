@@ -16,27 +16,12 @@ int32_t zvec_priv_rar_unit(zvec_t* this) {
 }
 
 int32_t zvec_fit(zvec_t* this) {
+  int32_t size = zvec_size(this);
   if (this->lrem)
     zvec_intl_rar(this, this->lrem);
-  this->head = realloc(this->head, (zvec_size(this) + 1) * this->soe);
+  this->head = realloc(this->head, (size + 1) * this->soe);
   this->rrem = 0;
-  return zvec_size(this);
-}
-
-static inline
-int32_t zvec_priv_grow(zvec_t* this) {
-  int32_t cap, alloc;
-  void* vp;
-
-  cap = zvec_cap(this);
-  alloc = cap * 2 < MIN_CAPACITY ? MIN_CAPACITY : cap;
-  vp = realloc(this->head, (alloc + 1) * this->soe);
-  if (vp == NULL)
-    return 0;
-
-  this->head = vp;
-  this->rrem += alloc - cap;
-  return 1;
+  return size; 
 }
 
 int32_t zvec_push(zvec_t* this, const void* val) {
@@ -45,7 +30,7 @@ int32_t zvec_push(zvec_t* this, const void* val) {
     unit = zvec_priv_rar_unit(this);
     if (unit)
       zvec_intl_rar(this, unit);
-    else if (!zvec_priv_grow(this))
+    else if (!zvec_intl_grow(this))
       return 0;
   }
   size = zvec_size(this);
@@ -144,7 +129,7 @@ int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
 
   if (it < b || it > e)
     return -1; // invalid arguments
-  if (!this->rrem && !zvec_priv_grow(this))
+  if (!this->rrem && !zvec_intl_grow(this))
     return 0; // out of memory
 
   b = e;
