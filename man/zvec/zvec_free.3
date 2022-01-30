@@ -1,0 +1,53 @@
+.\" Copyright 2022 Yu Ze (pseudoc@163.com)
+.\" MIT LICENSE
+.\"
+.TH ZVEC_FREE 3 2022-01-30 "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_free \- free the vector instance of opaque type
+.IR zvec_t .
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "void zvec_free(zvec_t* " this ");
+.SH DESCRIPTION
+The
+.BR zvec_free ()
+function frees all memory referred by the container,
+which uses
+.BR free ()
+to free the related memory blocks.
+.SS PARAMETERS
+.TP
+.IR this :
+the vector instance.
+.SH ERROR
+Cause double free eror when calling
+.BR zvec_free ()
+twice.
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_free ()
+T}	Thread safety	MT-Safe
+.TE
+.SH EXAMPLE
+.BI "zvec_t* " dvec " = zvec_new(sizeof(" double "));
+.br
+// some operations ...
+.br
+.BI "zvec_free(" dvec ");
+.SH SEE ALSO
+.TP
+constructors
+.BR zvec_new (3) ,
+.BR zvec_from (3) ,
+.BR zvec_slice (3) 
+.TP
+.BR free (3)
+the free method.
