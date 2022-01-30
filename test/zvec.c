@@ -14,7 +14,8 @@ static int feels_good_man() {
 static int init_empty() {
   const int capacity = 8;
   zvec_t* vec;
-  vec = zvec_new(capacity, sizeof(int));
+  vec = zvec_new(sizeof(int));
+  zvec_reserve(vec, capacity);
   zassert(vec != NULL, "vec should not be NULL");
   zassert(zvec_begin(vec) == zvec_end(vec),
     "begin and end should be the same");
@@ -31,7 +32,7 @@ static int insert_items() {
   zvec_it it;
   int actual, i;
 
-  vec = zvec_new(0, sizeof(int));
+  vec = zvec_new(sizeof(int));
   zvec_push(vec, nums[2]);
   zvec_push(vec, nums[3]);
   zvec_unshift(vec, nums[0]);

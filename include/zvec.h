@@ -7,11 +7,12 @@
 typedef struct zvec zvec_t;
 typedef void* zvec_it;
 
-zvec_t* zvec_new(int32_t, size_t);
+zvec_t* zvec_new(size_t);
 zvec_t* zvec_from(const void*, int32_t, size_t);
 zvec_t* zvec_slice(zvec_t*, zvec_it, zvec_it);
 void zvec_free(zvec_t*);
 void zvec_clear(zvec_t*);
+int32_t zvec_reserve(zvec_t*, int32_t);
 int32_t zvec_size(zvec_t*);
 int32_t zvec_cap(zvec_t*);
 

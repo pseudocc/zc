@@ -140,6 +140,7 @@ int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
     zvec_dec(this, &e);
   }
   memcpy(e, &val, this->soe);
+  this->rrem--;
 
   return zvec_size(this);
 }

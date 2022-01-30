@@ -20,10 +20,11 @@ void zvec_intl_shrink(zvec_t* this) {
 }
 
 int32_t zvec_intl_grow(zvec_t* this) {
-  int32_t more = this->cap >> 1;
+  int32_t more;
   int32_t ncap;
   void* nhead;
 
+  more = this->cap >> 1;
   if (!more)
     more++;
   ncap = more + this->cap;
