@@ -1,0 +1,39 @@
+.\" Copyright
+.\" MIT LICENSE
+.\"
+.TH ZVEC_SLICE 3 yyyy-MM-dd "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_slice \- create vector from another vector
+with specific range
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "zvec_t* zvec_slice(zvec_t* " from ",
+.BI "zvec_it " begin ", zvec_it " end ");
+.SH DESCRIPTION
+.SS PARAMETERS
+.SH RETURN VALUE
+.SH ERROR 
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_slice ()
+T}	Thread safety	MT-Safe
+.TE
+.SH EXAMPLE
+.SH SEE ALSO
+.TP
+.BR zvec_free (3)
+free the resources referred by the instance.
+.TP
+.BR zvec_new (3)
+create a empty vector.
+.TP
+.BR zvec_from (3)
+create vector from C array.
