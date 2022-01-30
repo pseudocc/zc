@@ -9,41 +9,31 @@ zvec_new \- create instance of opaque type
 .nf
 .B #include <zvec.h>
 .P
-.BI "zvec_t* zvec_new(int32_t " cap ", uint32_t " soe ");
+.BI "zvec_t* zvec_new(size_t " soe ");
 .fi
 .SH DESCRIPTION
 The
-.BR zvec_new()
+.BR zvec_new ()
 function allocates
-.I cap
-*
-.I soe
-bytes for the internal void pointer when
-.I cap
-is no less than 0.
-To use the default capacity just input 0.
+block of memory for the container.
+The initial capacity would be
+IR 0 .
 .P
-.I cap
-is the initial capacity for the vector.
-.P
-.I soe
-is the size of the element.
+.IR soe :
+the size of the element.
 .P
 This function uses
-.BR malloc()
+.BR malloc ()
 to allocate related memory blocks.
 .SH RETURN VALUE
 The
-.BR zvec_new()
+.BR zvec_new ()
 function return a pointer to the instance.
-On error, it returns
-.BR NULL .
 .SH ERROR
-.B malloc()
-Out of memory.
-.P
-.I cap
-is negative.
+Cause segfault when
+.BR malloc ()
+returns 
+.IR NULL .
 .SH ATTRIBUTES
 For an explanation of the terms used in this section, see
 .BR attributes (7).
@@ -57,11 +47,15 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH SEE ALSO
-.B malloc(3)
+.TP
+.BR malloc (3)
 the allocation method.
-.P
-.B zvec_free(3)
-free the resources referenced by the instance.
-.P
-.B zvec_slice(3)
+.TP
+.BR zvec_free (3)
+free the resources referred by the instance.
+.TP
+.BR zvec_from (3)
+create vector from C array.
+.TP
+.BR zvec_slice (3)
 create sub-vector from existing one.
