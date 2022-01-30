@@ -15,16 +15,16 @@ zvec_new \- create instance of opaque type
 The
 .BR zvec_new ()
 function allocates
-block of memory for the container.
-The initial capacity would be
-IR 0 .
-.P
+block of memory for the container,
+which uses
+.BR malloc ()
+to allocate related memory blocks
+and its initial capacity is
+.IR 0 .
+.SS PARAMETERS
+.TP
 .IR soe :
 the size of the element.
-.P
-This function uses
-.BR malloc ()
-to allocate related memory blocks.
 .SH RETURN VALUE
 The
 .BR zvec_new ()
@@ -46,6 +46,10 @@ T{
 .BR zvec_new ()
 T}	Thread safety	MT-Safe
 .TE
+.SH EXAMPLE
+// Create a vector of integers.
+.br
+.BI "zvec_t* " ivec " = zvec_new(sizeof(" int "));
 .SH SEE ALSO
 .TP
 .BR malloc (3)
