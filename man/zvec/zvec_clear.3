@@ -1,0 +1,52 @@
+.\" Copyright 2022 Yu Ze (pseudoc@163.com)
+.\" MIT LICENSE
+.\"
+.TH ZVEC_CLEAR 3 2022-02-06 "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_clear \- clear all the elements in the vector
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "void zvec_clear(zvec_t* " this ");
+.SH DESCRIPTION
+The
+.BR zvec_clear ()
+function adjust the position of the left pointer
+and the right pointer, putting them at the same point.
+if the current capacity is greater than
+.I MAX_RESERVED
+capacity will be reduced to that value.
+.SS PARAMETERS
+.TP
+.IR this :
+pointer to the opaque instance.
+.SH ERROR
+segfault when
+.I this
+is
+.IR NULL .
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_clear ()
+T}	Thread safety	MT-Safe
+.TE
+.SH EXAMPLE
+.BI "zvec_t* " ivec " = zvec_new(sizeof(" int "));
+.br
+.BI "zvec_push(" ivec ", (" int ")3);
+.br
+.BI "zvec_clear(" ivec ");
+.br
+.BI "printf(""size: %d"", zvec_size(" ivec "));
+// size: 0
+.SH SEE ALSO
+.TP
+.BR zvec_cap (3)
+see the current capacity of the vector container.
