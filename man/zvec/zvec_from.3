@@ -1,0 +1,92 @@
+.\" Copyright 2022 Yu Ze (pseudoc@163.com)
+.\" MIT LICENSE
+.\"
+.TH ZVEC_FROM 3 2022-02-06 "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_from \- create vector with specific size from C array
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "zvec_t* zvec_from(const void* " arr ",
+.BI "int32_t " n ", size_t " soe ");
+.SH DESCRIPTION
+The
+.BR zvec_from ()
+function allocates
+.IR n *
+.IR soe bytes
+for the container by using
+.BR malloc ()
+and duplicate the content with
+.BR memcpy () .
+.SS PARAMETERS
+.IR arr :
+source C array, if
+.I arr
+is
+.I NULL
+an initialized vector
+will be returned.
+.P
+.IR n :
+number of elements in the array.
+.P
+.IR soe :
+the size of the element.
+.SH RETURN VALUE
+The
+.BR zvec_from ()
+function returns a pointer to the instance on success,
+returns
+.I NULL
+when container block allocation failed.
+.SH ERROR
+Cause segfault when
+.BR malloc ()
+returns 
+.I NULL
+for the instance
+or any element of the source
+.I arr
+is not accessible when 
+.I arr
+is not
+.IR NULL .
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_from ()
+T}	Thread safety	MT-Safe
+.TE
+.SH EXAMPLE
+.B int nums[] = { 92, 11, 29 };
+.P
+// Create from existing array
+.br
+.BI "zvec_t* " ivec " = zvec_from(" nums ", " 3 ", sizeof(" int "));
+.P
+// Create vector with specific size
+.br
+.BI "zvec_t* " dvec " = zvec_from(" NULL ", 7, sizeof(" double "));
+.SH SEE ALSO
+.TP
+.BR malloc (3)
+the allocation method.
+.TP
+.BR memcpy (3)
+copy from the souce array.
+.TP
+.BR memset (3)
+initialize the vector when
+.I arr
+is
+.IR NULL .
+.TP
+.BR zvec_free (3)
+free the resources referred by the instance.
