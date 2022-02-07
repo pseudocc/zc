@@ -24,6 +24,7 @@ int32_t zvec_unshift(zvec_t*, const void*);
 int32_t zvec_purge(zvec_t*, const void*);
 void zvec_rm(zvec_t*, zvec_it);
 int32_t zvec_add(zvec_t*, zvec_it, const void*);
+void* zvec_emplace(zvec_t*, zvec_it);
 
 int32_t zvec_rm_range(zvec_t*, zvec_it, zvec_it);
 int32_t zvec_add_range(zvec_t*, zvec_it, zvec_it, zvec_it);
