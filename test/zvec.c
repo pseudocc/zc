@@ -31,14 +31,17 @@ static int insert_items() {
   zvec_t* vec;
   zvec_it it;
   int actual, i;
+  int* ip;
 
   vec = zvec_new(sizeof(int));
-  zvec_push(vec, nums[2]);
   zvec_push(vec, nums[3]);
   zvec_unshift(vec, nums[0]);
   it = zvec_begin(vec);
   zvec_inc(vec, &it);
   zvec_add(vec, it, nums[1]);
+  zvec_inc(vec, &it);
+  ip = zvec_emplace(vec, it);
+  *ip = nums[2];
 
   it = zvec_begin(vec);
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
