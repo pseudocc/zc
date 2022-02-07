@@ -1,4 +1,5 @@
 #include <string.h>
+#include <errno.h>
 #include "./zvec_intl.h"
 
 static const uint32_t MIN_RAR_UNIT = 4;
@@ -122,16 +123,26 @@ void zvec_rm(zvec_t* this, zvec_it it) {
 }
 
 int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
+  // 0: out of memory
+  // -1: invalid arguments
+  if (zvec_emplace(this, it) == NULL)
+    return errno == ENOMEM ? 0 : -1;
+
+  memcpy(it, &val, this->soe);
+  return zvec_size(this);
+}
+
+void* zvec_emplace(zvec_t* this, zvec_it it) {
   zvec_it b, e;
 
   b = zvec_begin(this);
   e = zvec_end(this);
 
   if (it < b || it > e)
-    return -1; // invalid arguments
+    return NULL;
   if (!this->rrem && !zvec_intl_grow(this))
-    return 0; // out of memory
-
+    return NULL;
+  
   b = e;
   zvec_dec(this, &b);
   while (it < e) {
@@ -139,8 +150,7 @@ int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
     zvec_dec(this, &b);
     zvec_dec(this, &e);
   }
-  memcpy(e, &val, this->soe);
   this->rrem--;
 
-  return zvec_size(this);
+  return it;
 }
