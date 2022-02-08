@@ -38,14 +38,13 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
-.BI "zvec_t* " ivec " = zvec_new(sizeof(" int "));
-.br
-.BI "zvec_push(" ivec ", (" int ")3);
-.br
-.BI "zvec_clear(" ivec ");
-.br
-.BI "printf(""size: %d"", zvec_size(" ivec "));
+.EX
+zvec_t* ivec = zvec_new(sizeof(int));
+zvec_push(ivec, (int)3);
+zvec_clear(ivec);
+printf(""size: %d"", zvec_size(ivec));
 // size: 0
+.EE
 .SH SEE ALSO
 .TP
 .BR zvec_cap (3)

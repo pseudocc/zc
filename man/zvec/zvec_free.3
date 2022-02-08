@@ -37,11 +37,12 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
-.BI "zvec_t* " dvec " = zvec_new(sizeof(" double "));
-.br
+.EX
+zvec_t* dvec = zvec_new(sizeof(double));
+
 // some operations ...
-.br
-.BI "zvec_free(" dvec ");
+zvec_free(dvec);
+.EE
 .SH SEE ALSO
 .TP
 constructors

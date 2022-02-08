@@ -45,9 +45,10 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
+.EX
 // Create a vector of integers.
-.br
-.BI "zvec_t* " ivec " = zvec_new(sizeof(" int "));
+zvec_t* ivec = zvec_new(sizeof(int));
+.EE
 .SH SEE ALSO
 .TP
 .BR malloc (3)
