@@ -1,0 +1,77 @@
+.\" Copyright 2022 Yu Ze (pseudoc@163.com)
+.\" MIT LICENSE
+.\"
+.TH ZVEC_EMPLACE 3 2022-02-08 "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_emplace \- preserve memory for the in-coming object.
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "void* zvec_emplace(zvec_t " this ", zvec_it " it ");
+.SH DESCRIPTION
+The
+.BR zvec_emplace ()
+function is designed to add structs with large size,
+in order to avoid the redundant memory copy step.
+.SS PARAMETERS
+.TP
+.IR this :
+pointer to the vector instance.
+.TP
+.IR it :
+iterator represent the position to add the in-coming element.
+.SH RETURN VALUE
+The
+.BR zvec_emplace ()
+function returns a pointer to the in-coming element on success
+and returns
+.I NULL
+when the given position is not valid or allocation failed.
+.SH ERROR
+.I ENOMEM
+when allocation failed.
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_emplace ()
+T}	Thread safety	MT-Safe
+.TE
+.SH EXAMPLE
+.BI "struct " user " {
+.br
+.BI "  char name[64];
+.br
+.BI "  char passwd[64];
+.br
+.BI "};
+.P
+.BI "struct user* " up ";
+.br
+.BI "zvec_t* " uvec " = zvec_new(sizeof(struct " user "));
+.br
+.BI "" up " = zvec_emplace(" uvec ", zvec_end(" uvec "));
+.br
+// Initialize your element
+.br
+.BI "" up "->name = ""whatever"";
+.br
+.BI "" up "->passwd = ""not-important"";
+.SH SEE ALSO
+.TP
+.BR errno (3)
+.BR realloc (3)
+.I ENOMEM
+when allocation failed.
+.TP
+.BR realloc (3)
+require more memory space for the container.
+.TP
+.BR zvec_add (3)
+add an element into the vector.
+
