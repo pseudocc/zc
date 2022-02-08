@@ -1,0 +1,38 @@
+.\" Copyright 2022 Yu Ze (pseudoc@163.com)
+.\" MIT LICENSE
+.\"
+.TH ZVEC_CAP 3 2022-02-08 "ZC" "Linux Programmer's Manual"
+.SH NAME
+zvec_cap \- get the capacity of the vector.
+.SH SYNOPSIS
+.B #include <zvec.h>
+.P
+.BI "int32_t zvec_cap(zvec_t* " this ");
+.SH DESCRIPTION
+The
+.BR zvec_cap ()
+function returns the capacity of the vector.
+.SS PARAMETERS
+.TP
+.IR this :
+pointer to the vector instance.
+.SH RETURN VALUE
+the capacity of the vector.
+.SH ERROR
+segfault when
+.I this
+is
+.IR NULL .
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.TS
+allbox;
+lb lb lb
+l l l.
+Interface	Attribute	Value
+T{
+.BR zvec_cap ()
+T}	Thread safety	MT-Safe
+.TE
+.SH SEE ALSO
