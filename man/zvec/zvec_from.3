@@ -65,15 +65,15 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
-.B int nums[] = { 92, 11, 29 };
-.P
+.EX
+int nums[] = { 92, 11, 29 };
+
 // Create from existing array
-.br
-.BI "zvec_t* " ivec " = zvec_from(" nums ", " 3 ", sizeof(" int "));
-.P
+zvec_t* ivec = zvec_from(nums, 3, sizeof(int));
+
 // Create vector with specific size
-.br
-.BI "zvec_t* " dvec " = zvec_from(" NULL ", 7, sizeof(" double "));
+zvec_t* dvec = zvec_from(NULL, 7, sizeof(double));
+.EE
 .SH SEE ALSO
 .TP
 .BR malloc (3)

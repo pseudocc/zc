@@ -43,25 +43,20 @@ T{
 T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
-.BI "struct " user " {
-.br
-.BI "  char name[64];
-.br
-.BI "  char passwd[64];
-.br
-.BI "};
-.P
-.BI "struct user* " up ";
-.br
-.BI "zvec_t* " uvec " = zvec_new(sizeof(struct " user "));
-.br
-.BI "" up " = zvec_emplace(" uvec ", zvec_end(" uvec "));
-.br
+.EX
+struct user {
+  char name[64];
+  char passwd[64];
+};
+
+struct user* up;
+zvec_t* uvec = zvec_new(sizeof(struct user));
+up = zvec_emplace(uvec, zvec_end(uvec));
+
 // Initialize your element
-.br
-.BI "" up "->name = ""whatever"";
-.br
-.BI "" up "->passwd = ""not-important"";
+up->name = ""whatever"";
+up->passwd = ""not-important"";
+.EE
 .SH SEE ALSO
 .TP
 .BR errno (3)
@@ -74,4 +69,3 @@ require more memory space for the container.
 .TP
 .BR zvec_add (3)
 add an element into the vector.
-
