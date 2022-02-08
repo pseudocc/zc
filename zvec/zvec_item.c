@@ -143,6 +143,12 @@ void* zvec_emplace(zvec_t* this, zvec_it it) {
   if (!this->rrem && !zvec_intl_grow(this))
     return NULL;
   
+  if (it == b && this->lrem) {
+    zvec_dec(this, &b);
+    this->lrem--;
+    return b;
+  }
+
   b = e;
   zvec_dec(this, &b);
   while (it < e) {
