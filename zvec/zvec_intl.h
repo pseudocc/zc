@@ -16,8 +16,8 @@ struct zvec {
   size_t soe;
 };
 
-void zvec_intl_rar(zvec_t*, int32_t);
-void zvec_intl_shrink(zvec_t*);
-int32_t zvec_intl_grow(zvec_t*);
+void zvec_intl_rar(zvec_t, int32_t);
+void zvec_intl_shrink(zvec_t);
+int32_t zvec_intl_grow(zvec_t);
 
 #endif

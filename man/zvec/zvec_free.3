@@ -8,7 +8,7 @@ zvec_free \- free the vector instance of opaque type
 .SH SYNOPSIS
 .B #include <zvec.h>
 .P
-.BI "void zvec_free(zvec_t* " this ");
+.BI "void zvec_free(zvec_t " this ");
 .SH DESCRIPTION
 The
 .BR zvec_free ()
@@ -38,7 +38,7 @@ T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
 .EX
-zvec_t* dvec = zvec_new(sizeof(double));
+zvec_t dvec = zvec_new(sizeof(double));
 
 // some operations ...
 zvec_free(dvec);

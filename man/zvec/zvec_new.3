@@ -8,7 +8,7 @@ zvec_new \- create instance of opaque type
 .SH SYNOPSIS
 .B #include <zvec.h>
 .P
-.BI "zvec_t* zvec_new(size_t " soe ");
+.BI "zvec_t zvec_new(size_t " soe ");
 .SH DESCRIPTION
 The
 .BR zvec_new ()
@@ -47,7 +47,7 @@ T}	Thread safety	MT-Safe
 .SH EXAMPLE
 .EX
 // Create a vector of integers.
-zvec_t* ivec = zvec_new(sizeof(int));
+zvec_t ivec = zvec_new(sizeof(int));
 .EE
 .SH SEE ALSO
 .TP

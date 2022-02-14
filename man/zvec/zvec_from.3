@@ -7,7 +7,7 @@ zvec_from \- create vector with specific size from C array
 .SH SYNOPSIS
 .B #include <zvec.h>
 .P
-.BI "zvec_t* zvec_from(const void* " arr ",
+.BI "zvec_t zvec_from(const void* " arr ",
 .BI "int32_t " n ", size_t " soe ");
 .SH DESCRIPTION
 The
@@ -69,10 +69,10 @@ T}	Thread safety	MT-Safe
 int nums[] = { 92, 11, 29 };
 
 // Create from existing array
-zvec_t* ivec = zvec_from(nums, 3, sizeof(int));
+zvec_t ivec = zvec_from(nums, 3, sizeof(int));
 
 // Create vector with specific size
-zvec_t* dvec = zvec_from(NULL, 7, sizeof(double));
+zvec_t dvec = zvec_from(NULL, 7, sizeof(double));
 .EE
 .SH SEE ALSO
 .TP

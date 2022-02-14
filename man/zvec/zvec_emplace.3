@@ -55,7 +55,7 @@ struct user {
 };
 
 struct user* up;
-zvec_t* uvec = zvec_new(sizeof(struct user));
+zvec_t uvec = zvec_new(sizeof(struct user));
 up = zvec_emplace(uvec, zvec_end(uvec));
 
 // Initialize your element

@@ -3,16 +3,16 @@
 #include "./zvec_intl.h"
 
 static inline
-void zvec_priv_clear(zvec_t* this, int32_t cap) {
+void zvec_priv_clear(zvec_t this, int32_t cap) {
   this->lrem = cap >> LREM_RATIO_ORDER;
   this->rrem = cap - this->lrem;
   this->cap = cap;
 }
 
-zvec_t* zvec_new(size_t soe) {
-  zvec_t* inst;
+zvec_t zvec_new(size_t soe) {
+  zvec_t inst;
 
-  inst = malloc(sizeof(zvec_t));
+  inst = malloc(sizeof(struct zvec));
   inst->head = NULL;
   inst->soe = soe;
   inst->cap = 0;
@@ -21,13 +21,13 @@ zvec_t* zvec_new(size_t soe) {
   return inst;
 }
 
-zvec_t* zvec_from(const void* arr, int32_t n, size_t soe) {
-  zvec_t* inst;
+zvec_t zvec_from(const void* arr, int32_t n, size_t soe) {
+  zvec_t inst;
   int32_t cap;
   size_t n_bytes;
 
   n_bytes = n * soe;
-  inst = malloc(sizeof(zvec_t));
+  inst = malloc(sizeof(struct zvec));
   inst->head = malloc(n_bytes + soe);
 
   if (inst->head == NULL) {
@@ -49,17 +49,17 @@ zvec_t* zvec_from(const void* arr, int32_t n, size_t soe) {
   return inst;
 }
 
-void zvec_free(zvec_t* this) {
+void zvec_free(zvec_t this) {
   free(this->head);
   free(this);
 }
 
-void zvec_clear(zvec_t* this) {
+void zvec_clear(zvec_t this) {
   zvec_intl_shrink(this);
   zvec_priv_clear(this, this->cap);
 }
 
-int32_t zvec_reserve(zvec_t* this, int32_t cap) {
+int32_t zvec_reserve(zvec_t this, int32_t cap) {
   void* nhead;
   int32_t more;
   if (cap <= this->cap)
@@ -75,10 +75,10 @@ int32_t zvec_reserve(zvec_t* this, int32_t cap) {
   return more; 
 }
 
-int32_t zvec_size(zvec_t* this) {
+int32_t zvec_size(zvec_t this) {
   return this->cap - this->lrem - this->rrem;
 }
 
-int32_t zvec_cap(zvec_t* this) {
+int32_t zvec_cap(zvec_t this) {
   return this->cap;
 }

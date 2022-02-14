@@ -13,7 +13,7 @@ static int feels_good_man() {
 
 static int init_empty() {
   const int capacity = 8;
-  zvec_t* vec;
+  zvec_t vec;
   vec = zvec_new(sizeof(int));
   zvec_reserve(vec, capacity);
   zassert(vec != NULL, "vec should not be NULL");
@@ -28,7 +28,7 @@ static int init_empty() {
 
 static int insert_items() {
   const int nums[] = { 19, 92, 11, 29 };
-  zvec_t* vec;
+  zvec_t vec;
   zvec_it it;
   int actual, i;
   int* ip;
@@ -36,10 +36,9 @@ static int insert_items() {
   vec = zvec_new(sizeof(int));
   zvec_push(vec, nums[3]);
   zvec_unshift(vec, nums[0]);
-  it = zvec_begin(vec);
-  zvec_inc(vec, &it);
+  it = zvec_inc(vec, zvec_begin(vec));
   zvec_add(vec, it, nums[1]);
-  zvec_inc(vec, &it);
+  it = zvec_inc(vec, it);
   ip = zvec_emplace(vec, it);
   *ip = nums[2];
 
@@ -47,7 +46,7 @@ static int insert_items() {
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
     actual = zvec_get(it, int);
     zassert_eq(actual, nums[i], "vec[%d]", "%d", i);
-    zvec_inc(vec, &it);
+    it = zvec_inc(vec, it);
   }
   
   zvec_free(vec);
@@ -59,7 +58,7 @@ static int remove_items() {
   const int purge_num = 2;
   int actual, i;
   zvec_it it;
-  zvec_t* vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
+  zvec_t vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
 
   zvec_shift(vec, &actual);
   zassert_eq(actual, nums[0], "shift", "%d");
@@ -75,7 +74,7 @@ static int remove_items() {
     actual = zvec_get(it, int);
     zassert_eq(nums[i], actual,
       "vec[%d]", "%d", zvec_index(vec, it));
-    zvec_inc(vec, &it);
+    it = zvec_inc(vec, it);
   }
 
   zvec_free(vec);
@@ -84,7 +83,7 @@ static int remove_items() {
 
 static int iterator_ops() {
   const int nums[] = { 4, 5, 9, 1, 0, 7 };
-  zvec_t* vec;
+  zvec_t vec;
   zvec_it it;
   int actual, i;
 
@@ -93,12 +92,12 @@ static int iterator_ops() {
   actual = zvec_get(it, int);
   zassert_eq(actual, nums[i], "vec[%d]::get", "%d", i);
 
-  zvec_mov(vec, &it, i);
+  it = zvec_mov(vec, it, i);
   zvec_set(it, i, int);
   actual = zvec_get(it, int);
   zassert_eq(actual, i, "vec[%d]::set", "%d", i * 2);
 
-  zvec_dec(vec, &it);
+  it = zvec_dec(vec, it);
   zassert_eq(zvec_index(vec, it), i * 2 - 1,
     "iterator to index", "%d");
 
@@ -111,7 +110,7 @@ static int iterator_ops() {
 
 static int find_items() {
   const int nums[] = { 1, 3, 7, 4, 5, 9 };
-  zvec_t* vec;
+  zvec_t vec;
   zvec_it it;
   int i;
 
@@ -136,8 +135,8 @@ static int find_items() {
 static int sort_items() {
   int nums[] = { 2, 4, 7, 1, 3, 4, 8, 0 };
   const int n = ARRAY_SIZE(nums);
-  zvec_t* v1;
-  zvec_t* v2;
+  zvec_t v1;
+  zvec_t v2;
   int actual, i;
 
   v1 = zvec_from(nums, n, sizeof(int));

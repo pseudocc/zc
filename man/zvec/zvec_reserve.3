@@ -7,7 +7,7 @@ zvec_reserve \- [BRIEF]
 .SH SYNOPSIS
 .B #include <zvec.h>
 .P
-.BI "int32_t zvec_reserve(zvec_t* " this ", int32_t " cap ");
+.BI "int32_t zvec_reserve(zvec_t " this ", int32_t " cap ");
 .SH DESCRIPTION
 increase the capacity of the vector to
 .IR cap .
@@ -44,7 +44,7 @@ T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
 .EX
-zvec_t* ivec = zvec_new(sizeof(int));
+zvec_t ivec = zvec_new(sizeof(int));
 zvec_reserve(ivec, 10);
 .EE
 .SH SEE ALSO

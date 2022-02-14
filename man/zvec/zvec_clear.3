@@ -7,7 +7,7 @@ zvec_clear \- clear all the elements in the vector
 .SH SYNOPSIS
 .B #include <zvec.h>
 .P
-.BI "void zvec_clear(zvec_t* " this ");
+.BI "void zvec_clear(zvec_t " this ");
 .SH DESCRIPTION
 The
 .BR zvec_clear ()
@@ -39,7 +39,7 @@ T}	Thread safety	MT-Safe
 .TE
 .SH EXAMPLE
 .EX
-zvec_t* ivec = zvec_new(sizeof(int));
+zvec_t ivec = zvec_new(sizeof(int));
 zvec_push(ivec, (int)3);
 zvec_clear(ivec);
 printf(""size: %d"", zvec_size(ivec));

@@ -7,37 +7,36 @@ static inline int zvec_cmp(const void* l, const void* r,
   return rcmp ? -cmp(l, r) : cmp(l, r);
 }
 
-static zvec_it zvec_partition(zvec_t* this, zvec_it p, zvec_it r,
+static zvec_it zvec_partition(zvec_t this, zvec_it p, zvec_it r,
     cmpf cmp, int rcmp) {
   zvec_it i, j;
-  zvec_dec(this, &r);
+  r = zvec_dec(this, r);
   i = p;
   j = p;
 
   while (j < r) {
     if (zvec_cmp(j, r, cmp, rcmp) <= 0) {
       zvec_swap(this, i, j);
-      zvec_inc(this, &i);
+      i = zvec_inc(this, i);
     }
-    zvec_inc(this, &j);
+    j = zvec_inc(this, j);
   }
 
   zvec_swap(this, i, j);
   return i;
 }
 
-static void zvec_qsort(zvec_t* this, zvec_it p, zvec_it r,
+static void zvec_qsort(zvec_t this, zvec_it p, zvec_it r,
     cmpf cmp, int rcmp) {
   zvec_it q;
   if (p < r) {
     q = zvec_partition(this, p, r, cmp, rcmp);
     zvec_qsort(this, p, q, cmp, rcmp);
-    zvec_inc(this, &q);
-    zvec_qsort(this, q, r, cmp, rcmp);
+    zvec_qsort(this, zvec_inc(this, q), r, cmp, rcmp);
   }
 }
 
-void zvec_sort(zvec_t* this, zvec_it begin, zvec_it end, cmpf cmp) {
+void zvec_sort(zvec_t this, zvec_it begin, zvec_it end, cmpf cmp) {
   zvec_it tmp = NULL;
 
   if (begin > end) {
@@ -55,7 +54,7 @@ void zvec_sort(zvec_t* this, zvec_it begin, zvec_it end, cmpf cmp) {
   zvec_qsort(this, begin, end, cmp, tmp != NULL);
 }
 
-void zvec_swap(zvec_t* this, zvec_it it1, zvec_it it2) {
+void zvec_swap(zvec_t this, zvec_it it1, zvec_it it2) {
   zvec_it e;
   if (it1 == it2)
     return;
@@ -66,7 +65,7 @@ void zvec_swap(zvec_t* this, zvec_it it1, zvec_it it2) {
   memcpy(it2, e, this->soe);
 }
 
-void zvec_reverse(zvec_t* this, zvec_it begin, zvec_it end) {
+void zvec_reverse(zvec_t this, zvec_it begin, zvec_it end) {
   zvec_it tmp;
   
   if (begin > end) {
@@ -76,8 +75,8 @@ void zvec_reverse(zvec_t* this, zvec_it begin, zvec_it end) {
   }
   
   while (begin < end) {
-    zvec_dec(this, &end);
+    end = zvec_dec(this, end);
     zvec_swap(this, begin, end);
-    zvec_inc(this, &begin);
+    begin = zvec_inc(this, begin);
   }
 }
