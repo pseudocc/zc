@@ -36,10 +36,9 @@ static int insert_items() {
   vec = zvec_new(sizeof(int));
   zvec_push(vec, nums[3]);
   zvec_unshift(vec, nums[0]);
-  it = zvec_begin(vec);
-  zvec_inc(vec, &it);
+  it = zvec_inc(vec, zvec_begin(vec));
   zvec_add(vec, it, nums[1]);
-  zvec_inc(vec, &it);
+  it = zvec_inc(vec, it);
   ip = zvec_emplace(vec, it);
   *ip = nums[2];
 
@@ -47,7 +46,7 @@ static int insert_items() {
   for (i = 0; i < ARRAY_SIZE(nums); i++) {
     actual = zvec_get(it, int);
     zassert_eq(actual, nums[i], "vec[%d]", "%d", i);
-    zvec_inc(vec, &it);
+    it = zvec_inc(vec, it);
   }
   
   zvec_free(vec);
@@ -75,7 +74,7 @@ static int remove_items() {
     actual = zvec_get(it, int);
     zassert_eq(nums[i], actual,
       "vec[%d]", "%d", zvec_index(vec, it));
-    zvec_inc(vec, &it);
+    it = zvec_inc(vec, it);
   }
 
   zvec_free(vec);
@@ -93,12 +92,12 @@ static int iterator_ops() {
   actual = zvec_get(it, int);
   zassert_eq(actual, nums[i], "vec[%d]::get", "%d", i);
 
-  zvec_mov(vec, &it, i);
+  it = zvec_mov(vec, it, i);
   zvec_set(it, i, int);
   actual = zvec_get(it, int);
   zassert_eq(actual, i, "vec[%d]::set", "%d", i * 2);
 
-  zvec_dec(vec, &it);
+  it = zvec_dec(vec, it);
   zassert_eq(zvec_index(vec, it), i * 2 - 1,
     "iterator to index", "%d");
 
