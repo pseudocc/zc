@@ -27,7 +27,7 @@ zvec_t zvec_from(const void* arr, int32_t n, size_t soe) {
   size_t n_bytes;
 
   n_bytes = n * soe;
-  inst = malloc(sizeof(zvec_t));
+  inst = malloc(sizeof(struct zvec));
   inst->head = malloc(n_bytes + soe);
 
   if (inst->head == NULL) {
