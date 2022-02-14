@@ -5,7 +5,6 @@
 #include "include/zvec.h"
 
 #define PRESRV_RATIO_ORDER 1
-#define MIN_PRESRV 4
 
 struct zlist {
   void* head;
