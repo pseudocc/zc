@@ -5,12 +5,11 @@
 
 struct zlist {
   void* head;
-  void* tail;
-  uint32_t soe;
-  uint32_t size;
+  size_t soe;
+  size_t size;
 };
 
-void* zlnode_new(zlist_t*);
-void zlnode_free(void*);
+inline void* zlnode_new(zlist_t*);
+inline void zlnode_free(void*);
 
 #endif
