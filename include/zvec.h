@@ -39,9 +39,9 @@ zvec_it zvec_at(zvec_t, int32_t);
 int32_t zvec_index(zvec_t, zvec_it);
 int32_t zvec_count(zvec_t, zvec_it, zvec_it);
 
-void zvec_inc(zvec_t, zvec_it*);
-void zvec_dec(zvec_t, zvec_it*);
-void zvec_mov(zvec_t, zvec_it*, int32_t);
+zvec_it zvec_inc(zvec_t, zvec_it);
+zvec_it zvec_dec(zvec_t, zvec_it);
+zvec_it zvec_mov(zvec_t, zvec_it, int32_t);
 
 void zvec_sort(zvec_t, zvec_it, zvec_it, cmpf);
 void zvec_swap(zvec_t, zvec_it, zvec_it);

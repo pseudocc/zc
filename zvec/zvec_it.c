@@ -30,15 +30,15 @@ int32_t zvec_index(zvec_t this, zvec_it it) {
   return (it - zvec_begin(this)) / this->soe;
 }
 
-void zvec_inc(zvec_t this, zvec_it* it) {
-  *it += this->soe;
+zvec_it zvec_inc(zvec_t this, zvec_it it) {
+  return it + this->soe;
 }
 
-void zvec_dec(zvec_t this, zvec_it* it) {
-  *it -= this->soe;
+zvec_it zvec_dec(zvec_t this, zvec_it it) {
+  return it - this->soe;
 }
 
-void zvec_mov(zvec_t this, zvec_it* it, int32_t pace) {
+zvec_it zvec_mov(zvec_t this, zvec_it it, int32_t pace) {
   int64_t move = pace * this->soe;
-  *it += move;
+  return it + move;
 }
