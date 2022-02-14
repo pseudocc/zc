@@ -1,10 +1,10 @@
 #include "./zlist_intl.h"
 
-inline void* zlnode_new(zlist_t this) {
+void* zlnode_new(zlist_t this) {
   return malloc(sizeof(void*) + this->soe);
 }
 
-inline void zlnode_free(zlist_t this, void* lnode) {
+void zlnode_free(zlist_t this, void* lnode) {
   int32_t diff;
   size_t psrv = this->size << PRESRV_RATIO_ORDER;
   if (psrv > INT_MAX)

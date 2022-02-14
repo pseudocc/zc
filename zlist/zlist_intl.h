@@ -4,14 +4,17 @@
 #include <stdlib.h>
 #include "include/zvec.h"
 
+#define PRESRV_RATIO_ORDER 1
+#define MIN_PRESRV 4
+
 struct zlist {
   void* head;
   size_t soe;
   size_t size;
-  zvec_t freed;
+  zvec_t psrv;
 };
 
-inline void* zlnode_new(zlist_t);
-inline void zlnode_free(zlist_t, void*);
+void* zlnode_new(zlist_t);
+void zlnode_free(zlist_t, void*);
 
 #endif
