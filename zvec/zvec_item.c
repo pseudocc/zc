@@ -5,7 +5,7 @@
 static const uint32_t MIN_RAR_UNIT = 4;
 
 static inline
-int32_t zvec_priv_rar_unit(zvec_t* this) {
+int32_t zvec_priv_rar_unit(zvec_t this) {
   int32_t unit, cap;
 
   cap = zvec_cap(this);
@@ -16,7 +16,7 @@ int32_t zvec_priv_rar_unit(zvec_t* this) {
   return unit < MIN_RAR_UNIT ? 0 : unit;
 }
 
-int32_t zvec_fit(zvec_t* this) {
+int32_t zvec_fit(zvec_t this) {
   int32_t size = zvec_size(this);
   if (this->lrem)
     zvec_intl_rar(this, this->lrem);
@@ -25,7 +25,7 @@ int32_t zvec_fit(zvec_t* this) {
   return size; 
 }
 
-int32_t zvec_push(zvec_t* this, const void* val) {
+int32_t zvec_push(zvec_t this, const void* val) {
   int32_t unit, size;
   if (!this->rrem) {
     unit = zvec_priv_rar_unit(this);
@@ -40,7 +40,7 @@ int32_t zvec_push(zvec_t* this, const void* val) {
   return size + 1;
 }
 
-int32_t zvec_pop(zvec_t* this, void* ref) {
+int32_t zvec_pop(zvec_t this, void* ref) {
   int32_t size = zvec_size(this);
   if (!size)
     return 0;
@@ -49,7 +49,7 @@ int32_t zvec_pop(zvec_t* this, void* ref) {
   return size - 1;
 }
 
-int32_t zvec_shift(zvec_t* this, void* ref) {
+int32_t zvec_shift(zvec_t this, void* ref) {
   int32_t size = zvec_size(this);
   if (!size)
     return 0;
@@ -58,7 +58,7 @@ int32_t zvec_shift(zvec_t* this, void* ref) {
   return size - 1;
 }
 
-int32_t zvec_unshift(zvec_t* this, const void* val) {
+int32_t zvec_unshift(zvec_t this, const void* val) {
   int32_t size;
   zvec_it b = zvec_begin(this);
   if (!this->lrem)
@@ -70,7 +70,7 @@ int32_t zvec_unshift(zvec_t* this, const void* val) {
   return size + 1;
 }
 
-int32_t zvec_purge(zvec_t* this, const void* val) {
+int32_t zvec_purge(zvec_t this, const void* val) {
   int32_t n_deleted, n_bytes;
   zvec_it c, i, j, e;
 
@@ -102,7 +102,7 @@ int32_t zvec_purge(zvec_t* this, const void* val) {
   return n_deleted;
 }
 
-void zvec_rm(zvec_t* this, zvec_it it) {
+void zvec_rm(zvec_t this, zvec_it it) {
   zvec_it b, e;
 
   b = zvec_begin(this);
@@ -122,7 +122,7 @@ void zvec_rm(zvec_t* this, zvec_it it) {
   this->rrem++;
 }
 
-int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
+int32_t zvec_add(zvec_t this, zvec_it it, const void* val) {
   // 0: out of memory
   // -1: invalid arguments
   if (zvec_emplace(this, it) == NULL)
@@ -132,7 +132,7 @@ int32_t zvec_add(zvec_t* this, zvec_it it, const void* val) {
   return zvec_size(this);
 }
 
-void* zvec_emplace(zvec_t* this, zvec_it it) {
+void* zvec_emplace(zvec_t this, zvec_it it) {
   zvec_it b, e;
 
   b = zvec_begin(this);

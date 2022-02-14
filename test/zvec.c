@@ -13,7 +13,7 @@ static int feels_good_man() {
 
 static int init_empty() {
   const int capacity = 8;
-  zvec_t* vec;
+  zvec_t vec;
   vec = zvec_new(sizeof(int));
   zvec_reserve(vec, capacity);
   zassert(vec != NULL, "vec should not be NULL");
@@ -28,7 +28,7 @@ static int init_empty() {
 
 static int insert_items() {
   const int nums[] = { 19, 92, 11, 29 };
-  zvec_t* vec;
+  zvec_t vec;
   zvec_it it;
   int actual, i;
   int* ip;
@@ -59,7 +59,7 @@ static int remove_items() {
   const int purge_num = 2;
   int actual, i;
   zvec_it it;
-  zvec_t* vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
+  zvec_t vec = zvec_from(nums, ARRAY_SIZE(nums), sizeof(int));
 
   zvec_shift(vec, &actual);
   zassert_eq(actual, nums[0], "shift", "%d");
@@ -84,7 +84,7 @@ static int remove_items() {
 
 static int iterator_ops() {
   const int nums[] = { 4, 5, 9, 1, 0, 7 };
-  zvec_t* vec;
+  zvec_t vec;
   zvec_it it;
   int actual, i;
 
@@ -111,7 +111,7 @@ static int iterator_ops() {
 
 static int find_items() {
   const int nums[] = { 1, 3, 7, 4, 5, 9 };
-  zvec_t* vec;
+  zvec_t vec;
   zvec_it it;
   int i;
 
@@ -136,8 +136,8 @@ static int find_items() {
 static int sort_items() {
   int nums[] = { 2, 4, 7, 1, 3, 4, 8, 0 };
   const int n = ARRAY_SIZE(nums);
-  zvec_t* v1;
-  zvec_t* v2;
+  zvec_t v1;
+  zvec_t v2;
   int actual, i;
 
   v1 = zvec_from(nums, n, sizeof(int));
